@@ -7,8 +7,8 @@ import yukams.app.background_locator_2.Keys
 
 class LocationParserUtil {
     companion object {
-        // Modificado para HashMap<String, Any>
-        fun getLocationMapFromLocation(location: Location): HashMap<String, Any> {
+        // Garantir que o retorno seja HashMap<Any, Any>
+        fun getLocationMapFromLocation(location: Location): HashMap<Any, Any> {
             var speedAccuracy = 0f
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 speedAccuracy = location.speedAccuracyMetersPerSecond
@@ -18,22 +18,23 @@ class LocationParserUtil {
                 isMocked = location.isFromMockProvider
             }
 
+            // Garantir que o retorno seja 'HashMap<Any, Any>'
             return hashMapOf(
-                    Keys.ARG_IS_MOCKED to isMocked,
-                    Keys.ARG_LATITUDE to location.latitude,
-                    Keys.ARG_LONGITUDE to location.longitude,
-                    Keys.ARG_ACCURACY to location.accuracy,
-                    Keys.ARG_ALTITUDE to location.altitude,
-                    Keys.ARG_SPEED to location.speed,
-                    Keys.ARG_SPEED_ACCURACY to speedAccuracy,
-                    Keys.ARG_HEADING to location.bearing,
-                    Keys.ARG_TIME to location.time.toDouble(),
-                    Keys.ARG_PROVIDER to location.provider
-            )
+                Keys.ARG_IS_MOCKED to isMocked,
+                Keys.ARG_LATITUDE to location.latitude,
+                Keys.ARG_LONGITUDE to location.longitude,
+                Keys.ARG_ACCURACY to location.accuracy,
+                Keys.ARG_ALTITUDE to location.altitude,
+                Keys.ARG_SPEED to location.speed,
+                Keys.ARG_SPEED_ACCURACY to speedAccuracy,
+                Keys.ARG_HEADING to location.bearing,
+                Keys.ARG_TIME to location.time.toDouble(),
+                Keys.ARG_PROVIDER to location.provider
+            ) as HashMap<Any, Any>  // Casting explícito para garantir o tipo desejado
         }
 
-        // Modificado para HashMap<String, Any> e tratamento de valores nulos
-        fun getLocationMapFromLocation(location: LocationResult?): HashMap<String, Any>? {
+        // Garantir que o retorno seja HashMap<Any, Any> para o segundo método também
+        fun getLocationMapFromLocation(location: LocationResult?): HashMap<Any, Any>? {
             val firstLocation = location?.lastLocation ?: return null
 
             var speedAccuracy = 0f
@@ -45,17 +46,18 @@ class LocationParserUtil {
                 isMocked = firstLocation.isFromMockProvider
             }
 
+            // Garantir que o retorno seja 'HashMap<Any, Any>'
             return hashMapOf(
-                    Keys.ARG_IS_MOCKED to isMocked,
-                    Keys.ARG_LATITUDE to firstLocation.latitude,
-                    Keys.ARG_LONGITUDE to firstLocation.longitude,
-                    Keys.ARG_ACCURACY to firstLocation.accuracy,
-                    Keys.ARG_ALTITUDE to firstLocation.altitude,
-                    Keys.ARG_SPEED to firstLocation.speed,
-                    Keys.ARG_SPEED_ACCURACY to speedAccuracy,
-                    Keys.ARG_HEADING to firstLocation.bearing,
-                    Keys.ARG_TIME to firstLocation.time.toDouble()
-            )
+                Keys.ARG_IS_MOCKED to isMocked,
+                Keys.ARG_LATITUDE to firstLocation.latitude,
+                Keys.ARG_LONGITUDE to firstLocation.longitude,
+                Keys.ARG_ACCURACY to firstLocation.accuracy,
+                Keys.ARG_ALTITUDE to firstLocation.altitude,
+                Keys.ARG_SPEED to firstLocation.speed,
+                Keys.ARG_SPEED_ACCURACY to speedAccuracy,
+                Keys.ARG_HEADING to firstLocation.bearing,
+                Keys.ARG_TIME to firstLocation.time.toDouble()
+            ) as HashMap<Any, Any>  // Casting explícito para garantir o tipo desejado
         }
     }
 }
